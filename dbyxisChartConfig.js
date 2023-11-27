@@ -1,179 +1,192 @@
-let colors = ['#00adff', '#ff5722'];
-let yNameOne = '售出（kg）';
-let yNameTwo = '比例（%）';
-let xData = ['苹果', '香蕉', '橘子'];
-let yData = {
-    one: [5, 2, 7],
-    two: [52, 39, 68],
-};
-let splitNumber = 5; // 分割段
-//计算最大值
-function calMax(arr) {
-    let min = Math.min.apply(null, arr);
-    let max = Math.max.apply(null, arr);
-    let interval = (max - min) / splitNumber; // 平均值
-    max = Math.ceil(max + interval); // 向上取整
-    return max;
-}
-
-//计算最小值
-function calMin(arr) {
-    let min = Math.min.apply(null, arr);
-    let max = Math.max.apply(null, arr);
-    let interval = (max - min) / splitNumber; // 平均值
-    min = min > 0 ? min : Math.floor(min - interval); // 向下取整
-    // console.log(min, max, interval);
-    return min;
-}
 option = {
-    backgroundColor:"#000a40",
-    title: {
-        text: 'title',
-        top: '0',
-        x: 'center',
-        textStyle: { color: '#000', fontSize: '20', fontWeight: 'bold' },
+/*  grid: {
+    top: "20%",
+    bottom: "12%"
+  },*/
+  backgroundColor:"#0f375f",
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      type: "shadow",
+      label: {
+        show: true
+      }
+    }
+  },
+  legend: {
+    data: ["销售量", "业务1", "业务2"],
+    top: "2%",
+    right:'10',
+    textStyle: {
+      color: "rgba(250,250,250,0.6)",
+      fontSize: 16
+    }
+  },
+  xAxis: {
+    data: [
+      "区域1",
+      "区域2",
+      "区域3",
+      "区域4",
+      "区域5",
+      "区域6"
+    ],
+    axisLine: {
+      show: true, //隐藏X轴轴线
+      lineStyle: {
+        color: '#26D9FF',
+        width:2
+      }
     },
-    color: colors,
-    grid: {
-        top: '7%',
-        bottom: '5%',
-        left: '80',
-        right: '80',
+    axisTick: {
+      show: true //隐藏X轴刻度
     },
-    legend: {
-        top: '2%',
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: "rgba(250,250,250,0.6)", //X轴文字颜色
+        fontSize: 16
+      }
+    },
+    splitArea: {
+      show: true,
+      areaStyle: {
+        color: ["rgba(250,250,250,0.1)", "rgba(250,250,250,0)"]
+      }
+    }
+  },
+  yAxis: [{
+    type: "value",
+    /*name: "亿元",*/
+    nameTextStyle: {
+      color: "#ebf8ac",
+      fontSize: 16
+    },
+    splitLine: {
+      show: false
+    },
+    axisTick: {
+      show: true
+    },
+    axisLine: {
+      show: true,
+      lineStyle: {
+        color: '#26D9FF',
+        width:2
+      }
+    },
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: "rgba(250,250,250,0.6)",
+        fontSize: 16
+      }
+    },
+
+  },
+    {
+      type: "value",
+      /*name: "同比",*/
+      nameTextStyle: {
+        color: "#ebf8ac",
+        fontSize: 16
+      },
+      position: "right",
+      splitLine: {
+        show: false
+      },
+      axisTick: {
+        show: false
+      },
+      axisLine: {
+        show: false
+      },
+      axisLabel: {
+        show: true,
+        formatter: "{value} %", //右侧Y轴文字显示
         textStyle: {
-            color: '#00ffff',
-            margin: '10',
-        },
+          color: "rgba(250,250,250,0.6)",
+          fontSize: 16
+        }
+      }
+    }
+  ],
+  series: [{
+    name: "销售量",
+    type: "line",
+    yAxisIndex: 1, //使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+    smooth: true, //平滑曲线显示
+    showAllSymbol: true, //显示所有图形。
+    symbol: "circle", //标记的图形为实心圆
+    symbolSize: 8, //标记的大小
+    itemStyle: {
+      //折线拐点标志的样式
+      color: "#1045A0",
+      borderColor: "#3D7EEB",
+      width: 2,
+      shadowColor: "#3D7EEB",
+      shadowBlur: 4
     },
-    toolbox: {
-        feature: {
-            saveAsImage: {
-                backgroundColor: '#243a55',
-            },
-        },
-        iconStyle: {
-            borderColor: '#fff',
-            fontSize: '22px',
-        },
+    lineStyle: {
+      color: "#3D7EEB",
+      width:2,
+      shadowColor: "#3D7EEB",
+      shadowBlur: 4
     },
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: { type: 'shadow' },
+    areaStyle: {
+      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+        offset: 0,
+        color: "rgba(61,126,235, 0.5)"
+      },
+        {
+          offset: 1,
+          color: "rgba(61,126,235, 0)"
+        }
+      ])
     },
-    xAxis: {
-        type: 'category',
-        axisTick: { show: false },
-        axisLabel: {
-            textStyle: { color: '#fff', fontSize: 14 },
-            rotate: 0,//倾斜度
-        },
-        axisLine: {
-            show: true,
-            lineStyle: { color: '#fff' },
-        },
-        data: xData,
+    data: [4.2, 3.5, 2.9, 7.8, 5, 3]
+  },
+    {
+      name: "业务1",
+      type: "bar",
+      barWidth: 15,
+      itemStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: "rgba(61,126,235, 1)"
+          },
+            {
+              offset: 1,
+              color: "rgba(61,126,235, 0)"
+            }
+          ]),
+          borderColor:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: "rgba(160,196,225, 1)"
+          },
+            {
+              offset: 1,
+              color: "rgba(61,126,235, 1)"
+            }
+          ]),
+          borderWidth: 2
+        }
+      },
+      data: [4, 3, 2, 8, 3, 5]
     },
-    yAxis: [
-        {
-            name: yNameOne,
-            type: 'value',
-            position: 'left',
-            min: 0,
-            max: calMax(yData.one),
-            splitNumber: splitNumber,
-            interval:
-                (calMax(yData.one) - (calMin(yData.one) > 0 ? 0 : calMin(yData.one))) / splitNumber,
-            splitLine: {
-                lineStyle: { type: 'dashed', color: '#707070' },
-            },
-            axisLabel: {
-                // formatter: '{value}mm',
-                formatter: function (value, index) {
-                    return (value + '').indexOf('.') != -1 ? value.toFixed(1) : value;
-                },
-                textStyle: { color: colors[0], fontSize: 14 },
-            },
-            axisLine: {
-                show: true,
-                lineStyle: {
-                    color: colors[0],
-                    width: 2,
-                },
-            },
-            axisTick: { show: false },
-        },
-        {
-            name: yNameTwo,
-            type: 'value',
-            position: 'right',
-            min: 0,
-            max: calMax(yData.two),
-            splitNumber: splitNumber,
-            interval:
-                (calMax(yData.two) - (calMin(yData.two) < 0 ? calMin(yData.two) : 0)) / splitNumber,
-            splitLine: { show: false },
-            axisLabel: {
-                // formatter: '{value}°C',
-                formatter: function (value, index) {
-                    return (value + '').indexOf('.') != -1 ? value.toFixed(1) : value;
-                    //return parseInt(value) + '%';
-                },
-                textStyle: { color: colors[1], fontSize: 14 },
-            },
-            axisLine: {
-                show: true,
-                lineStyle: {
-                    color: colors[1],
-                    width: 2,
-                },
-            },
-            axisTick: { show: false },
-        },
-    ],
-    series: [
-        {
-            name: yNameOne,
-            type: 'bar',
-            barWidth: '30%',
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true, //开启显示
-                        position: 'top', //在上方显示
-                        textStyle: {
-                            //数值样式
-                            color: colors[0],
-                            fontSize: 12,
-                            fontWeight: 400,
-                        },
-                    },
-                },
-            },
-            data: yData.one,
-        },
-        {
-            name: yNameTwo,
-            type: 'line',
-            symbol: 'circle',
-            symbolSize: 8,
-            yAxisIndex: 1,
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true, //开启显示
-                        position: 'top', //在上方显示
-                        textStyle: {
-                            //数值样式
-                            color: colors[1],
-                            fontSize: 12,
-                            fontWeight: 400,
-                        },
-                    },
-                },
-            },
-            data: yData.two,
-        },
-    ],
+    {
+      name: "业务2",
+      type: "bar",
+      barWidth: 15,
+      itemStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{offset: 0, color: 'rgba(15,197,243,1)'}, {offset: 1, color: 'rgba(15,197,243,0)'}]),
+          borderColor:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{offset: 0, color: 'rgba(180,240,255,1)'}, {offset: 1, color: 'rgba(15,197,243,1)'}]),
+          borderWidth: 2
+        }
+      },
+      data: [3, 2, 3, 5, 4, 3]
+    }
+  ]
 };
